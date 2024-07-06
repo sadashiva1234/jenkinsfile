@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+    triggers {
+        pollSCM('H/5 * * * *') // Poll the SCM every 5 minutes
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/your-repo.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Building...'
+                sh 'make build'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing...'
+                sh 'make test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying...'
+                sh 'make deploy'
+            }
+        }
+    }
+}
